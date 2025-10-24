@@ -1,0 +1,12 @@
+[submodule "utilities-payment-auth"]
+	path = utilities-payment-auth
+	url = https://github.com/iskanye/utilities-payment-auth
+[submodule "utilities-payment-api-gateway"]
+	path = utilities-payment-api-gateway
+	url = https://github.com/iskanye/utilities-payment-api-gateway
+[submodule "utilities-payment-payment"]
+	path = utilities-payment-payment
+	url = https://github.com/iskanye/utilities-payment-payment
+[submodule "utilities-payment-billing"]
+	path = utilities-payment-billing
+	url = https://github.com/iskanye/utilities-payment-billing
