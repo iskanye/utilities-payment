@@ -6,6 +6,7 @@ type User struct {
 	ID       int64
 	Email    string
 	PassHash []byte
+	Address  string
 }
 
 type UserSaver interface {
@@ -13,6 +14,7 @@ type UserSaver interface {
 		ctx context.Context,
 		email string,
 		passHash []byte,
+		address string,
 	) (uid int64, err error)
 }
 
