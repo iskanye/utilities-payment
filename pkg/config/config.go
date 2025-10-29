@@ -8,17 +8,17 @@ import (
 )
 
 // Load config
-func MustLoad[T any](modifyCfg func(*T)) *T {
+func MustLoad[T any]() *T {
 	configPath := fetchConfigPath()
 	if configPath == "" {
 		panic("config path is empty")
 	}
 
-	return MustLoadPath(configPath, modifyCfg)
+	return MustLoadPath[T](configPath)
 }
 
 // Load config file by path
-func MustLoadPath[T any](configPath string, modifyCfg func(*T)) *T {
+func MustLoadPath[T any](configPath string) *T {
 	// check if file exists
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		panic("config file does not exist: " + configPath)
@@ -30,13 +30,8 @@ func MustLoadPath[T any](configPath string, modifyCfg func(*T)) *T {
 		panic("cannot read config: " + err.Error())
 	}
 
-	modifyCfg(&cfg)
-
 	return &cfg
 }
-
-// Placeholder for MustLoad
-func NoModyfing[T any](_ *T) {}
 
 func fetchConfigPath() string {
 	var res string
