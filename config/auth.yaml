@@ -1,0 +1,5 @@
+storage_path: "./storage/auth.db"
+secret: "AUTH-SECRET-AUTH"
+grpc:
+  port: 44044
+  timeout: 5s

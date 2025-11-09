@@ -1,0 +1,10 @@
+postgres:
+  host: "billing-db"
+  port: 5432
+  user: "postgres" # Данные должны совпадать с таковыми в docker-compose файле
+  password: "postgres"
+  db_name: "postgres"
+grpc:
+  port: 44080
+  timeout: 5s
+term: 1

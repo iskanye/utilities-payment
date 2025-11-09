@@ -1,0 +1,6 @@
+# Специальный файл со списком админов и их паролями
+admins:
+- email: "admin@admin.com"
+  password: "admin"
+- email: "admin@admin.ru"
+  password: "admin"

@@ -1,0 +1,3 @@
+grpc:
+  port: 44000
+  timeout: 5s
