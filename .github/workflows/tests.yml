@@ -31,4 +31,4 @@ jobs:
           go mod download
 
       - name: Run tests
-        run: go test -v ./tests
+        run: go test -v ./utilities-payment-api-gateway/tests
