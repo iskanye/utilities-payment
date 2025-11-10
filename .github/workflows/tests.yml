@@ -14,8 +14,8 @@ jobs:
 
       - name: Fetch submodules
         run: |
-          git pull --recurse-submodules
-          git submodule update --remote --recursive
+          git submodule init
+          git submodule update
 
       - name: Build the stack
         run: docker compose -f docker-compose.test.yml up -d --build
