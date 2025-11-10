@@ -6,6 +6,8 @@ jobs:
   tests:
     name: 'Run tests'
     runs-on: ubuntu-latest
+    env:
+      AUTH-SECRET: ${{ vars.TEST_SECRET }}
 
     steps:
       - uses: actions/checkout@v5
@@ -16,8 +18,6 @@ jobs:
           git submodule update
 
       - name: Build the stack
-        env:
-          AUTH_SECRET: ${{ vars.TEST_SECRET }}
         run: docker compose -f docker-compose.test.yml up -d --build
 
       - name: Setup Go 1.25.x
@@ -31,6 +31,4 @@ jobs:
 
       - name: Run tests
         working-directory: ./utilities-payment-api-gateway
-        env:
-          AUTH-SECRET: ${{ vars.TEST_SECRET }}
         run: go test -v ./tests
