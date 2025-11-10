@@ -1,0 +1,53 @@
+services:
+  auth:
+    build: utilities-payment-auth/
+    environment:
+      AUTH_SECRET: "TEST-SECRET"
+    ports:
+      - 44044:44044
+    container_name: auth
+    networks:    
+      - backend
+  billing-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    container_name: billing-db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d postgres" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    networks:    
+      - backend
+    volumes:
+      - billing-db:/var/lib/postgresql/data
+  billing:
+    build: utilities-payment-billing/
+    environment:
+      CONFIG_PATH: ./config/dev.yaml
+    depends_on:
+      billing-db:
+        condition: service_healthy
+    ports:
+      - 44080:44080
+    container_name: billing
+    networks:    
+      - backend
+  payment:
+    build: utilities-payment-payment/
+    ports:
+      - 44000:44000
+    container_name: payment
+    networks:    
+      - backend
+
+volumes:
+  billing-db:
+
+networks:
+  backend:
