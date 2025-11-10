@@ -20,15 +20,16 @@ jobs:
       - name: Build the stack
         run: docker compose -f docker-compose.test.yml up -d --build
 
+      - name: Move to API Gateway tests
+        run: cd utilities-payment-api-gateway
+
       - name: Setup Go 1.25.x
         uses: actions/setup-go@v5
         with:
           go-version: '1.25.x'
 
       - name: Install dependencies
-        run: |
-          cd utilities-payment-api-gateway
-          go mod tidy
+        run: go mod download
 
       - name: Run tests
         run: go test -v ./utilities-payment-api-gateway/tests
