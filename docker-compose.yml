@@ -12,6 +12,7 @@ services:
     container_name: gateway
     networks:    
       - backend
+
   auth:
     build: utilities-payment-auth/
     environment:
@@ -21,6 +22,7 @@ services:
     container_name: auth
     networks:    
       - backend
+
   billing-db:
     image: postgres:latest
     environment:
@@ -39,6 +41,7 @@ services:
       - backend
     volumes:
       - billing-db:/var/lib/postgresql/data
+
   billing:
     build: utilities-payment-billing/
     environment:
@@ -51,6 +54,7 @@ services:
     container_name: billing
     networks:    
       - backend
+
   payment:
     build: utilities-payment-payment/
     ports:
