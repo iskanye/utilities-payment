@@ -20,10 +20,10 @@ jobs:
       - name: Build the stack
         run: docker compose -f docker-compose.test.yml up -d --build
 
-      - name: Setup Go 1.25.x
+      - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25.x'
+          go-version-file: './utilities-payment-api-gateway/go.mod'
 
       - name: Install dependencies
         working-directory: ./utilities-payment-api-gateway
