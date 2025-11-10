@@ -27,10 +27,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./utilities-payment-api-gateway
-        run: |        
-          go mod tidy
-          go mod verify
-          go mod download
+        run: go mod download
 
       - name: Run tests
         working-directory: ./utilities-payment-api-gateway
