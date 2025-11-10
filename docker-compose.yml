@@ -1,6 +1,8 @@
 services:
   api-gateway:
     build: utilities-payment-api-gateway/
+    environment:
+      AUTH_SECRET: ${AUTH_SECRET}
     depends_on:
       - auth
       - billing
@@ -12,6 +14,8 @@ services:
       - backend
   auth:
     build: utilities-payment-auth/
+    environment:
+      AUTH_SECRET: ${AUTH_SECRET}
     ports:
       - 44044:44044
     container_name: auth
