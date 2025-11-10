@@ -25,7 +25,7 @@ services:
     networks:    
       - backend
     volumes:
-      - billing-db:/var/lib/postgresql/data
+      - billing-db:/var/lib/postgresql/18/data
   billing:
     build: utilities-payment-billing/
     environment:

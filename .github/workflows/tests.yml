@@ -6,6 +6,8 @@ jobs:
   tests:
     name: 'Run tests'
     runs-on: ubuntu-latest
+    env:
+      AUTH_SECRET: TEST-SECRET
 
     steps:
       - uses: actions/checkout@v5
@@ -14,6 +16,7 @@ jobs:
         run: |
           git pull --recurse-submodules
           git submodule update --remote --recursive
+
       - name: Build the stack
         run: docker compose -f docker-compose.test.yml up -d --build
 
