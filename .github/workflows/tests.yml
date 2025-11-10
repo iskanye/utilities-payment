@@ -7,7 +7,7 @@ jobs:
     name: 'Run tests'
     runs-on: ubuntu-latest
     env:
-      AUTH_SECRET: TEST-SECRET
+      AUTH_SECRET: ${{ vars.TEST_SECRET }}
 
     steps:
       - uses: actions/checkout@v5
