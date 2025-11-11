@@ -21,3 +21,57 @@
 ### Тестирование
 
 * [Testify](https://github.com/stretchr/testify) - библиотека для эффективного написания тестов на Go
+
+## Сборка и запуск
+
+### 1. Клонирование репозитория с подмодулями
+
+```bash
+git clone --recurse-submodules https://github.com/iskanye/utilities-payment.git
+cd utilities-payment
+```
+
+Если репозиторий был склонирован без подмодулей, выполните:
+
+```bash
+git submodule init
+git submodule update
+```
+
+### 2. Сборка
+
+Для сборки потребуется установленный [Docker](https://www.docker.com/).
+
+**`ВАЖНО`**: Заранее при сборке установите значение параметров окружения `AUTH_SECRET`, `POSTGRES_USER`, `POSTGRES_PASSWORD` и `POSTGRES_DB` для корректной работы сервиса, например:
+
+```bash
+export AUTH_SECRET="SUPER-SECRET"
+export POSTGRES_USER="postgres"
+export POSTGRES_PASSWORD="postgres"
+export POSTGRES_DB="postgres"
+```
+
+Или в среде Powershell:
+
+```powershell
+$Env:AUTH_SECRET="SUPER-SECRET"
+$Env:POSTGRES_USER="postgres"
+$Env:POSTGRES_PASSWORD="postgres"
+$Env:POSTGRES_DB="postgres"
+```
+
+После выполните следующую команду для сборки сервисов:
+
+```bash
+docker compose build
+```
+
+### 3. Запуск
+
+Для запуска сервисов выполните:
+
+```bash
+docker compose up
+```
+
+После запуска с сервисом можно будет работать по адресу `localhost:8080`
