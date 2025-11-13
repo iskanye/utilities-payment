@@ -1,4 +1,13 @@
 services:
+  cache:
+    image: memcached:alpine
+    ports:
+      - 11211:11211
+    container_name: cache
+    networks:    
+      - backend
+    restart: always
+
   auth:
     build: utilities-payment-auth/
     environment:
@@ -26,7 +35,7 @@ services:
     networks:    
       - backend
     volumes:
-      - billing-db:/var/lib/postgresql/18/data
+      - billing-db:/var/lib/postgresql/
 
   billing:
     build: utilities-payment-billing/
