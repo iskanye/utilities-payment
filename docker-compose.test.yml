@@ -15,7 +15,6 @@ services:
     ports:
       - 44044:44044
     container_name: auth
-    command: "--config ./config/tests.yaml"
     networks:    
       - backend
 
@@ -59,7 +58,6 @@ services:
     ports:
       - 44000:44000
     container_name: payment
-    command: "--config ./config/tests.yaml"
     networks:    
       - backend
 
