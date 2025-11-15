@@ -1,5 +1,34 @@
 # Сервис по симуляции оплаты услуг ЖКХ
 
+## Схема взаимодействия микросервисов
+
+```mermaid
+architecture-beta
+    group api[API]
+
+    service db(database)[Postgres]
+    service billing(server)[Billing] in api
+    service auth(server)[Authentication] in api
+    service payment(server)[Payment] in api
+
+    junction center in api
+    junction bottom in api
+
+    center:B -- T:bottom
+
+    center:L --> R:billing
+    center:R --> L:payment
+    bottom:R --> L:auth
+
+    billing:B -- T:db
+
+    service gateway(internet)[API Gateway]
+    service cache(database)[Memcached]
+
+    gateway:B -- T:center
+    gateway:L -- R:cache
+```
+
 ## Технологический стек
 
 ### Веб-фрейморки
