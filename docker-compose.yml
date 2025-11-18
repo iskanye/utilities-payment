@@ -76,8 +76,17 @@ services:
     networks:    
       - backend
 
+  frontend:
+    build: utilities-payment-frontend/
+    ports:
+      - 5500:80
+    container_name: frontend
+    networks:    
+      - frontend
+
 volumes:
   billing-db:
 
 networks:
   backend:
+  frontend:
