@@ -10,3 +10,6 @@
 [submodule "utilities-payment-billing"]
 	path = utilities-payment-billing
 	url = https://github.com/iskanye/utilities-payment-billing
+[submodule "utilities-payment-frontend"]
+	path = utilities-payment-frontend
+	url = https://github.com/iskanye/utilities-payment-frontend
