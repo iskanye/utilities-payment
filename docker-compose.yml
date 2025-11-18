@@ -55,6 +55,9 @@ services:
   billing:
     build: utilities-payment-billing/
     environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
       CONFIG_PATH: ./config/dev.yaml
     depends_on:
       billing-db:
