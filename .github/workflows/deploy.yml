@@ -19,9 +19,6 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
-      - name: Checkout (sanity check only)
-        uses: actions/checkout@v5
-
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
