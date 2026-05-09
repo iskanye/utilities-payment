@@ -19,12 +19,24 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Ensure deploy directory exists
+        run: |
+          ssh -p "${{ secrets.SSH_PORT || 22 }}" \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
+            "mkdir -p '${{ secrets.DEPLOY_PATH }}'"
 
       - name: Generate .env
         run: |
@@ -35,22 +47,21 @@ jobs:
           POSTGRES_DB=${{ secrets.POSTGRES_DB }}
           EOF
 
-      - name: Upload .env to server
+      - name: Sync sources to server
         run: |
-          scp -P "${{ secrets.SSH_PORT || 22 }}" \
-            .env \
-            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/.env"
+          rsync -az --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            -e "ssh -p ${{ secrets.SSH_PORT || 22 }}" \
+            ./ \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/"
 
-      - name: Pull & rebuild on server
+      - name: Build & deploy on server
         run: |
           ssh -p "${{ secrets.SSH_PORT || 22 }}" \
             "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
             "set -e; \
              cd '${{ secrets.DEPLOY_PATH }}'; \
-             git fetch --all --prune; \
-             git reset --hard origin/main; \
-             git submodule sync --recursive; \
-             git submodule update --init --recursive --remote; \
              docker compose pull --ignore-pull-failures || true; \
              docker compose up -d --build --remove-orphans; \
              docker image prune -f"
